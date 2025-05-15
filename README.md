@@ -1,6 +1,6 @@
 # React Datagrid Table
 
-[![npm version](https://badge.fury.io/js/react-datagrid-table.svg)](https://badge.fury.io/js/react-datagrid-table)
+[![npm version](https://badge.fury.io/js/react-shadcn-datagrid.svg)](https://badge.fury.io/js/react-shadcn-datagrid)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 A powerful, customizable, and performant data grid component for React, built with [Tailwind CSS](https://tailwindcss.com/) and [Shadcn UI](https://ui.shadcn.com/) primitives. Designed for modern web applications needing robust table functionalities.
@@ -22,11 +22,11 @@ A powerful, customizable, and performant data grid component for React, built wi
 Install the package using npm, yarn, or pnpm:
 
 ```bash
-npm install react-datagrid-table # or @your-npm-username/react-datagrid-table
+npm install react-shadcn-datagrid # or @your-npm-username/react-shadcn-datagrid
 # or
-yarn add react-datagrid-table # or @your-npm-username/react-datagrid-table
+yarn add react-shadcn-datagrid # or @your-npm-username/react-shadcn-datagrid
 # or
-pnpm add react-datagrid-table # or @your-npm-username/react-datagrid-table
+pnpm add react-shadcn-datagrid # or @your-npm-username/react-shadcn-datagrid
 ```
 
 ## Peer Dependencies
@@ -41,7 +41,7 @@ Please ensure these are included in your project's `package.json`.
 
 ## Tailwind CSS Setup
 
-`react-datagrid-table` is built with Tailwind CSS and expects your project to have Tailwind CSS configured.
+`react-shadcn-datagrid` is built with Tailwind CSS and expects your project to have Tailwind CSS configured.
 
 To ensure Tailwind processes the classes used by this library, add the following to your `tailwind.config.js` (or `tailwind.config.ts`):
 
@@ -50,15 +50,15 @@ To ensure Tailwind processes the classes used by this library, add the following
 module.exports = {
   content: [
     // ...your other content paths
-    "./node_modules/react-datagrid-table/dist/**/*.{js,ts,jsx,tsx,mjs}",
+    "./node_modules/react-shadcn-datagrid/dist/**/*.{js,ts,jsx,tsx,mjs}",
     // If you also want to include the src for development (optional):
-    // "./node_modules/react-datagrid-table/src/**/*.{js,ts,jsx,tsx}",
+    // "./node_modules/react-shadcn-datagrid/src/**/*.{js,ts,jsx,tsx}",
   ],
   // ...rest of your Tailwind config
 };
 ```
 
-**Note:** If you publish your package under a scoped name (e.g., `@your-npm-username/react-datagrid-table`), replace `react-datagrid-table` in the path above with your actual package name.
+**Note:** If you publish your package under a scoped name (e.g., `@your-npm-username/react-shadcn-datagrid`), replace `react-shadcn-datagrid` in the path above with your actual package name.
 
 ## Basic Usage
 
@@ -66,7 +66,7 @@ Here's a simple example of how to use the `DataGrid` component:
 
 ```tsx
 import React, { useState } from "react";
-import { DataGrid, ColumnDef } from "react-datagrid-table"; // or '@your-npm-username/react-datagrid-table'
+import { DataGrid, ColumnDef } from "react-shadcn-datagrid"; // or '@your-npm-username/react-shadcn-datagrid'
 // Make sure to import any necessary CSS if you have a global stylesheet where Shadcn styles are imported
 // import './globals.css'; // Example
 
