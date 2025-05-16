@@ -22,11 +22,11 @@ A powerful, customizable, and performant data grid component for React, built wi
 Install the package using npm, yarn, or pnpm:
 
 ```bash
-npm install react-shadcn-datagrid # or @your-npm-username/react-shadcn-datagrid
-# or
-yarn add react-shadcn-datagrid # or @your-npm-username/react-shadcn-datagrid
-# or
-pnpm add react-shadcn-datagrid # or @your-npm-username/react-shadcn-datagrid
+npm install react-shadcn-datagrid 
+
+yarn add react-shadcn-datagrid 
+
+pnpm add react-shadcn-datagrid 
 ```
 
 ## Peer Dependencies
