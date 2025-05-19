@@ -48,7 +48,7 @@ export function RatingCell({
   };
 
   return (
-    <div className="flex items-center justify-center space-x-1 h-full">
+    <div className="flex items-center justify-start space-x-1 h-full">
       {[...Array(maxRating)].map((_, index) => {
         const ratingValue = index + 1;
         const isFilled = ratingValue <= (hoverRating || currentRating);

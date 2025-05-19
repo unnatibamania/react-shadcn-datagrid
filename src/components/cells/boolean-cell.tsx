@@ -36,7 +36,7 @@ export function BooleanCell({
 
   return (
     // Align checkbox to the start (left)
-    <div className="flex items-center  justify-center h-full w-full">
+    <div className="flex items-center  justify-start h-full w-full">
       <Checkbox
         checked={isChecked}
         onCheckedChange={handleCheckedChange}

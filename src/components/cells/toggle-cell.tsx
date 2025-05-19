@@ -34,7 +34,7 @@ export function ToggleCell({
 
   return (
     // Center the switch within the cell
-    <div className="flex items-center justify-center h-full w-full">
+    <div className="flex items-center justify-start h-full w-full">
       <Switch
         checked={isChecked}
         onCheckedChange={handleCheckedChange}

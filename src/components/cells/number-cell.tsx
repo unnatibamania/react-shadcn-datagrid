@@ -76,7 +76,7 @@ export function NumberCell({ initialValue, onSave }: NumberCellProps) {
   return (
     <div
       onDoubleClick={handleDoubleClick}
-      className="cursor-pointer align-center  flex items-center justify-center truncate" // Removed px-2 py-1, w-full
+      className="cursor-pointer align-center  flex items-center justify-start truncate" // Removed px-2 py-1, w-full
     >
       {/* Display formatted number or "-" if null/undefined */}
       {initialValue != null ? initialValue.toLocaleString() : "-"}
