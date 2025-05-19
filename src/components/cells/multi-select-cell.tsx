@@ -71,18 +71,10 @@ export function MultiSelectCell({
   classNames, // Destructure
 }: MultiSelectCellProps) {
   const [isOpen, setIsOpen] = React.useState(false);
-  // Ensure we work with an array, treat null/undefined as empty
-  const selectedValues = React.useMemo(
-    () => new Set(initialValues || []),
-    [initialValues]
-  );
-
-  // Local state for managing selections within the popover before saving
   const [currentSelected, setCurrentSelected] = React.useState(
-    new Set(selectedValues)
+    new Set(initialValues || [])
   );
 
-  // Update local state if initialValues prop changes externally
   React.useEffect(() => {
     setCurrentSelected(new Set(initialValues || []));
   }, [initialValues]);
@@ -90,43 +82,39 @@ export function MultiSelectCell({
   const handlePopoverOpenChange = (open: boolean) => {
     if (!isEditable) return;
     setIsOpen(open);
-    if (!open) {
-      // When closing, check if changes were made and save
-      const initialSet = new Set(initialValues || []);
-      const hasChanged =
-        currentSelected.size !== initialSet.size ||
-        ![...currentSelected].every((value) => initialSet.has(value));
-
-      if (hasChanged) {
-        const newValuesArray = Array.from(currentSelected);
-        onSave(newValuesArray.length > 0 ? newValuesArray : null);
-      }
-    } else {
-      // Reset currentSelected to initial when opening
+    if (open) {
+      // When opening, reset currentSelected to the latest initialValues
       setCurrentSelected(new Set(initialValues || []));
     }
+    // onSave is now handled by toggleOption and clear selection
   };
 
-  const toggleOption = (option: string) => {
-    setCurrentSelected((prev) => {
-      const next = new Set(prev);
-      if (next.has(option)) {
-        next.delete(option);
-      } else {
-        next.add(option);
-      }
-      return next;
-    });
+  const toggleOption = (optionValue: string) => {
+    const next = new Set(currentSelected);
+    if (next.has(optionValue)) {
+      next.delete(optionValue);
+    } else {
+      next.add(optionValue);
+    }
+    setCurrentSelected(next);
+    const newValuesArray = Array.from(next);
+    onSave(newValuesArray.length > 0 ? newValuesArray : null);
   };
 
-  // const displayBadges = displayValues.slice(0, maxDisplay);
-  // const overflowCount = displayValues.length - maxDisplay;
+  const handleClearSelection = () => {
+    const next = new Set<string>();
+    setCurrentSelected(next);
+    onSave(null);
+  };
 
-  const displayBadges = options.filter((option) =>
-    selectedValues.has(option.value)
-  );
+  // Derive displayBadges from the local currentSelected state for immediate UI updates
+  const displayBadges = React.useMemo(() => {
+    return options.filter((option) => currentSelected.has(option.value));
+  }, [options, currentSelected]);
 
-  const overflowCount = displayBadges.length - maxDisplay;
+  const badgesToShow = displayBadges.slice(0, maxDisplay);
+  const overflowCount =
+    displayBadges.length > maxDisplay ? displayBadges.length - maxDisplay : 0;
 
   return (
     <Popover open={isOpen} onOpenChange={handlePopoverOpenChange}>
@@ -136,22 +124,22 @@ export function MultiSelectCell({
           role="combobox"
           aria-expanded={isOpen}
           className={cn(
-            "w-full border-0 rounded-lg justify-start font-normal truncate data-[state=open]:bg-accent",
+            "w-full border-0 rounded-lg justify-start font-normal truncate data-[state=open]:bg-accent h-auto py-1.5 px-2", // adjusted padding
             classNames?.multiSelectTrigger
           )}
         >
-          <div className="flex gap-1 flex-wrap items-center">
-            {displayBadges.length > 0 ? (
-              displayBadges.map((value) => (
+          <div className="flex gap-1 flex-wrap items-center w-full">
+            {badgesToShow.length > 0 ? (
+              badgesToShow.map((option) => (
                 <Badge
-                  key={value.value}
+                  key={option.value}
                   className={cn(
-                    "whitespace-nowrap px-1.5 py-0.5 text-xs rounded-full font-medium ",
-                    getColorClass(value.value),
+                    "whitespace-nowrap px-1.5 py-0.5 text-xs rounded-full font-medium",
+                    getColorClass(option.value),
                     classNames?.badge
                   )}
                 >
-                  {value.icon} {value.label}
+                  {option.icon} {option.label}
                 </Badge>
               ))
             ) : (
@@ -167,7 +155,7 @@ export function MultiSelectCell({
             )}
           </div>
           {isEditable && (
-            <ChevronsUpDown className="ml-auto h-4 w-4 shrink-0 opacity-50" />
+            <ChevronsUpDown className="ml-auto h-4 w-4 shrink-0 opacity-50 flex-shrink-0" />
           )}
         </Button>
       </PopoverTrigger>
@@ -208,7 +196,7 @@ export function MultiSelectCell({
                 <CommandSeparator />
                 <CommandGroup>
                   <CommandItem
-                    onSelect={() => setCurrentSelected(new Set())}
+                    onSelect={handleClearSelection}
                     style={{ cursor: "pointer", color: "red" }}
                     className={cn(classNames?.multiSelectItem)}
                   >
