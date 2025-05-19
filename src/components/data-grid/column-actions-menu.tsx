@@ -30,8 +30,6 @@ export function ColumnActionsMenu<T>({
 }: ColumnActionsMenuProps<T>) {
   // Only render if there are actions available
 
-  if (!column.isEditable || !column.isDeletable) return null;
-
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
